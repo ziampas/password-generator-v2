@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="../js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body
+    class="bg-pink-300 d-flex align-items-center justify-content-center min-vh-100"
+  >
+    <header class="position-fixed top-0 end-0 p-3 z-index-10">
+      <!-- Dark mode toggle icon (moon icon) -->
+      <i
+        id="darkModeToggle"
+        class="bi bi-moon-fill"
+        aria-label="Toggle Dark Mode"
+      ></i>
+    </header>
+
+    <div class="container">
+      <div class="row w-100 justify-content-center">
+        <!-- Left Div: Logo -->
+        <div
+          class="col-md-4 d-flex justify-content-center align-items-center mb-4 mb-md-0"
+        >
+          <img
+            src="../img/passbear_new.png"
+            alt="Logo"
+            class="img-fluid"
+            style="max-width: 100%; max-height: 400px; object-fit: contain"
+          />
+        </div>
+
+        <!-- Right Div: Form -->
+        <div class="col-md-4 form-card">
+          <!-- Icon for the form header -->
+          <!-- <h5>Generate your password</h5> -->
+
+          <form id="password-form">
+            <div class="mb-3 mt-3">
+              <input
+                type="text"
+                id="generated-password"
+                class="form-control form-control-lg"
+                readonly
+                placeholder="Your password will appear here"
+              />
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="numbers"
+                id="numbers-option"
+                checked
+              />
+              <label class="form-check-label" for="numbers-option"
+                >Include Numbers</label
+              >
+            </div>
+
+            <div class="form-check mt-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="specialchars"
+                id="specialchars-option"
+              />
+              <label class="form-check-label" for="specialchars-option"
+                >Include Special Characters</label
+              >
+            </div>
+
+            <!-- Display Password Length -->
+            <p class="mt-4">
+              Password length: <span id="generated-password-length"></span>
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-primary w-100 mb-2"
+              id="generate-password"
+            >
+              Generate Password
+            </button>
+            <button
+              type="button"
+              class="btn btn-success w-100"
+              id="copy-to-clipboard"
+            >
+              Copy to Clipboard
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Link to script.js -->
+    <script type="module" src="../js/script.js"></script>
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "f8b5f69e46634d37af68188b12619f66"}'
+    ></script>
+  </body>
+</html>

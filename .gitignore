@@ -1,0 +1,24 @@
+# Node modules
+node_modules/
+
+# Build output (for example, Webpack or Parcel output)
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# IDE or editor folders (e.g., VSCode, Sublime Text)
+.vscode/
+.idea/
+
+# OS-specific files (e.g., macOS .DS_Store, Windows Thumbs.db)
+.DS_Store
+Thumbs.db
+
+# Package-lock or Yarn.lock (optional, but often ignored)
+package-lock.json
+yarn.lock

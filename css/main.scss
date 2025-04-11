@@ -1,0 +1,185 @@
+/* Option A: Include all of Bootstrap */
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+/* Set the background color to pink */
+body {
+  background-color: #fd98cb; /* Pink background */
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Custom colors for dark mode */
+$dark-background: #1f1f1f;
+$dark-text: #ffffff;
+$dark-form-background: #2a2a2a;
+$dark-form-text: #bbb;
+$light-btn-hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: $dark-background;
+  color: $dark-text;
+}
+
+/* 🌙 Moon Icon Styles */
+#darkModeToggle {
+  font-size: 1.75rem;
+  color: #ffeb3b; /* Bright moon yellow */
+  cursor: pointer;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+body.dark-mode #darkModeToggle {
+  color: #f4c542; /* Softer yellow for dark mode */
+}
+
+/* 📋 Form Card Styling */
+.form-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-mode .form-card {
+  background: $dark-form-background;
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.05);
+  color: $dark-form-text;
+}
+
+/* Form Card Header Styles (No shadow, no underline) */
+.form-card h5 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333; /* Darker text color for readability */
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-transform: none; /* Remove uppercase transformation */
+}
+
+/* Button Styling */
+.btn {
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+body.dark-mode .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(255, 255, 255, 0.2); /* Light shadow for dark mode */
+}
+
+/* 🌑 Form Input/Checkbox Styling */
+.form-control {
+  margin-bottom: 1rem; /* Space between input and checkboxes */
+}
+
+.form-check {
+  margin-bottom: 1rem; /* Space between checkboxes */
+}
+
+.form-check-label {
+  color: #333;
+}
+
+body.dark-mode .form-check-label {
+  color: $dark-form-text;
+}
+
+/* 📋 Password Length Text Styling */
+p.mt-4 {
+  margin-top: 1rem; /* Space between password length and buttons */
+}
+
+body.dark-mode p {
+  color: $dark-form-text;
+}
+
+/* 🧑‍💻 Logo Styling (Mobile) */
+@media (max-width: 768px) {
+  .col-md-4 img {
+    max-width: 90%;
+    max-height: 200px; /* Adjust logo size on smaller screens */
+  }
+
+  .form-card {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .container {
+    padding: 1rem;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .col-md-4 {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 💻 Desktop/Tablet Styling Adjustments */
+@media (max-width: 768px) {
+  .form-card {
+    width: 100%;
+    padding: 1.5rem;
+  }
+
+  .row {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* 🌑 Dark Mode - Form Control Focused (Removing border and box-shadow) */
+.form-control:focus {
+  border-color: transparent; /* Remove border color */
+  box-shadow: none; /* Remove box-shadow */
+}
+
+body.dark-mode .form-control:focus {
+  border-color: transparent; /* Remove border color in dark mode */
+  box-shadow: none; /* Remove box-shadow in dark mode */
+}
+
+/* 🧑‍💻 Accessibility (Remove focus highlight) */
+.form-control:focus,
+#generated-password:focus {
+  outline: none; /* Remove the outline on focus */
+  border-color: transparent; /* Remove the border color */
+  box-shadow: none; /* Remove the glow effect */
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode #generated-password:focus {
+  outline: none; /* Remove the outline in dark mode */
+  border-color: transparent; /* Remove border color in dark mode */
+  box-shadow: none; /* Remove the glow effect in dark mode */
+}
+
+/* Dark Mode - Change Text/Background Colors for Better Contrast */
+body.dark-mode {
+  background-color: #1f1f1f;
+  color: $dark-text; /* Light text color for dark mode */
+}
+
+body.dark-mode .form-card {
+  background: $dark-form-background;
+}
+
+body.dark-mode .form-check-label {
+  color: $dark-form-text;
+}
+
+body.dark-mode p {
+  color: $dark-form-text;
+}
