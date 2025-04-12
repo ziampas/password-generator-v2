@@ -61,7 +61,6 @@ const adjectives = [
   'graceful',
   'gritty',
   'happy',
-  'heroic',
   'honest',
   'hungry',
   'jumpy',
