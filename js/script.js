@@ -69,15 +69,30 @@ generatedPasswordInput.addEventListener('input', () => {
 });
 
 copyBtn.addEventListener('click', () => {
-  // Use the modern Clipboard API for better security and functionality
-  navigator.clipboard.writeText(generatedPasswordInput.value)
-    .then(() => {
-      showSuccessMessage();
-    })
-    .catch(err => {
-      console.error('Failed to copy password:', err);
-    });
+  const password = generatedPasswordInput.value;
+
+  if (!password || password.trim() === '') {
+    // Display an error message if no password is generated
+    const errorAlert = document.createElement('div');
+    errorAlert.classList.add('alert', 'alert-danger', 'my-3');
+    errorAlert.textContent = 'Please generate a password before copying!';
+
+    copyBtn.parentElement.insertBefore(errorAlert, copyBtn.nextSibling);
+
+    // Remove the error message after 3 seconds
+    setTimeout(() => errorAlert.remove(), 3000);
+  } else {
+    // Use the modern Clipboard API for better security and functionality
+    navigator.clipboard.writeText(password)
+      .then(() => {
+        showSuccessMessage();
+      })
+      .catch(err => {
+        console.error('Failed to copy password:', err);
+      });
+  }
 });
+
 
 // Dark mode initialization
 if (localStorage.getItem('darkMode') === 'enabled') {
