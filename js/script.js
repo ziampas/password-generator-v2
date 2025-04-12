@@ -11,7 +11,7 @@ const generatePassword = () => {
   // Initialize the characters pool
   let characters = '';
   if (includeNumbers) characters += '0123456789';
-  if (includeSpecialChars) characters += '!@#%&/()_+';
+  if (includeSpecialChars) characters += '!@#%&()_+';
 
   // Select random adjective and noun
   const adjective = getRandomElement(adjectives);
@@ -19,7 +19,7 @@ const generatePassword = () => {
 
   // Random components: number and special character (if options are selected)
   const randomNumber = includeNumbers ? Math.floor(Math.random() * 90) + 10 : '';
-  const randomSpecialChar = includeSpecialChars ? getRandomElement('!@#%&/()_+') : '';
+  const randomSpecialChar = includeSpecialChars ? getRandomElement('!@#%&()_+') : '';
 
   // Combine parts to create the password
   const password = adjective + noun + randomNumber + randomSpecialChar;
