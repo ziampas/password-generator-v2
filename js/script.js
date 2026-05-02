@@ -10,7 +10,7 @@ const SPECIALS = '!@#%)_';
 // Optimized for memorable, easy-to-type visual words
 const CATEGORIES = {
     adjective: ['color', 'size', 'condition', 'appearance'],
-    noun: ['animals', 'food', 'thing', 'place']
+    noun: ['animals', 'food', 'thing', 'people']
 };
 
 // --- 2. SECURE RANDOM HELPERS ---
