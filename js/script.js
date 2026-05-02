@@ -45,7 +45,6 @@ const generatePassword = () => {
         return num + spec;
     };
 
-    // Main attempt loop (tries for 2 words)
     for (let attempts = 0; attempts < 100; attempts++) {
         const suffix = getSuffix();
         let slugParts = generateSlug(2, { format: formatType, categories: CATEGORIES });
@@ -60,7 +59,6 @@ const generatePassword = () => {
         }
     }
 
-    // Waterproof Fallback (guarantees 2 words, then trims if absolutely necessary)
     if (!password) {
         const suffix = getSuffix();
         let fallbackSlug = generateSlug(2, { format: formatType, categories: CATEGORIES });
@@ -124,6 +122,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // --- NEW: Manual Edit Listener ---
+    // This updates the length counter as the user types
+    passwordInput.addEventListener('input', () => {
+        actualLengthDisplay.textContent = passwordInput.value.length;
+    });
+
     // Events
     controls.forEach(el => el.addEventListener('change', handlePersistence));
 
@@ -162,5 +166,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadSavedData();
-    generateBtn.click(); // Initial generate
+    generateBtn.click(); 
 });
