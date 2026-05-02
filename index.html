@@ -3,34 +3,63 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PassBear - Simple password generator</title>
-    
+    <title>PassBear | Secure & Memorable Password Generator</title>
+
     <!-- SEO & Favicons -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon-32x32.png" />
-    <meta name="description" content="PassBear.net - Making password generation easy and secure for better online protection." />
-    
+    <link rel="canonical" href="https://passbear.net" />
+    <meta name="description" content="Generate secure, memorable, and private passwords with PassBear. Our browser-based tool uses crypto-secure randomness to keep your online accounts safe." />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PassBear - Memorable Password Generator" />
+    <meta property="og:description" content="Secure, private, and easy-to-remember passwords generated locally in your browser." />
+    <meta property="og:url" content="https://passbear.net" />
+    <meta property="og:type" content="website" />
+
     <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-    
+
     <style>
-        /* Mjuk övergång för e-postlänken */
         .transition-link {
             transition: opacity 0.2s ease-in-out;
         }
+
+        /* Discrete SEO Section */
+        .seo-content {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 3rem;
+            margin-top: 4rem;
+        }
     </style>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PassBear",
+        "url": "https://passbear.net",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Any",
+        "description": "A secure password generator that creates easy-to-remember passwords using local browser cryptography.",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
 </head>
 
 <body class="bg-dark d-flex flex-column min-vh-100">
 
-    <!-- Huvudinnehåll centrerat vertikalt i viewporten -->
     <main class="flex-grow-1 d-flex align-items-center py-5">
         <div class="container">
-            
-            <!-- Övre raden: Logo och Generator -->
+
+            <!-- Generator Section -->
             <div class="row justify-content-center align-items-center">
-                
-                <!-- Logo Section -->
+                <!-- Logo -->
                 <div class="col-md-4 d-flex justify-content-center mb-4 mb-md-0">
                     <a href="https://passbear.net">
                         <img src="img/passbear_new.png" alt="PassBear Logo" class="img-fluid" style="max-width: 100%; max-height: 400px; object-fit: contain" />
@@ -43,7 +72,7 @@
                         <form id="password-form">
                             <!-- Result Display -->
                             <div class="mb-3 mt-2">
-                                <input type="text" id="generated-password" class="form-control form-control-lg text-center" placeholder="Your password will appear here" />
+                                <input type="text" id="generated-password" class="form-control form-control-lg text-center" placeholder="Your password" aria-label="Generated Password" readonly />
                             </div>
 
                             <!-- Length Sliders -->
@@ -64,7 +93,7 @@
                                 </div>
                             </div>
 
-                            <!-- Options Grid -->
+                            <!-- Options -->
                             <div class="row g-2 mb-2">
                                 <div class="col-6 text-nowrap">
                                     <div class="form-check">
@@ -92,7 +121,7 @@
                                 </div>
                             </div>
 
-                            <!-- Persistent Settings -->
+                            <!-- Additional Settings -->
                             <div class="form-check mt-3 pt-2 border-top">
                                 <input class="form-check-input" type="checkbox" id="save-settings-option" />
                                 <label class="form-check-label small" for="save-settings-option">Save settings</label>
@@ -110,32 +139,46 @@
                 </div>
             </div>
 
-            <!-- Undre raden: Minimalist Info (Med extra gap mt-5) -->
-            <div class="row justify-content-center mt-5">
-                <div class="col-md-8 text-center text-white-50">
-                    <div class="mb-2">
-                        <i class="bi bi-lock fs-4 opacity-50"></i>
-                    </div>
-                    <p class="small fw-light mb-0">
-                        <span class="text-white fw-bold text-uppercase" style="letter-spacing: 1px;">Memorable. Secure. Private.</span><br>
-                        Passwords for humans. Generated in-browser and stored locally only.
+            <!-- SEO & INFO SECTION: Three columns for balance and searchability -->
+            <div class="row justify-content-center seo-content">
+                <!-- Column 1: Security -->
+                <div class="col-md-4 mb-4 text-center text-md-start">
+                    <h2 class="h6 text-white text-uppercase fw-bold" style="letter-spacing: 1px;">Secure & Private</h2>
+                    <p class="small text-white-50">
+                        PassBear generates passwords directly in your browser. Since no data is ever sent to a server, 
+                        your credentials remain entirely your own, ensuring a private and secure experience without local logs.
+                    </p>
+                </div>
+                
+                <!-- Column 2: Usability -->
+                <div class="col-md-4 mb-4 text-center text-md-start">
+                    <h2 class="h6 text-white text-uppercase fw-bold" style="letter-spacing: 1px;">Memorable</h2>
+                    <p class="small text-white-50">
+                        We focus on "passwords for humans" by combining easy-to-remember words with logical formatting. 
+                        This structure creates passwords that are simple to remember, but complex for computers to guess.
+                    </p>
+                </div>
+
+                <!-- Column 3: Instructions -->
+                <div class="col-md-4 mb-4 text-center text-md-start">
+                    <h2 class="h6 text-white text-uppercase fw-bold" style="letter-spacing: 1px;">How to Use</h2>
+                    <p class="small text-white-50">
+                        Adjust the sliders to set your length, toggle numbers or symbols, and click <strong>Generate</strong>. 
+                        Once your secure password appears, use <strong>Copy to Clipboard</strong> to instantly protect your accounts.
                     </p>
                 </div>
             </div>
-            
+
         </div>
     </main>
 
-    <!-- Footer låst i botten via mt-auto -->
+    <!-- Footer -->
     <footer class="text-white-50 py-4 mt-auto">
         <div class="container border-top border-secondary pt-3" style="--bs-border-opacity: .2;">
             <div class="d-md-flex justify-content-between align-items-center small">
-                <!-- Copyright Section -->
                 <div class="mb-2 mb-md-0 opacity-50">
-                    &copy; 2026 PassBear | Simple & Secure
+                    &copy; 2026 PassBear | Simple & Secure Password Generator
                 </div>
-                
-                <!-- Email Section -->
                 <div>
                     <a href="mailto:hello@passbear.net" class="link-light link-opacity-50 link-opacity-100-hover text-decoration-none transition-link">
                         <i class="bi bi-envelope me-1"></i> hello@passbear.net
@@ -145,9 +188,8 @@
         </div>
     </footer>
 
-    <!-- Bootstrap Bundle with Popper -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Your Custom Logic -->
     <script type="module" src="/js/script.js"></script>
 </body>
 </html>
