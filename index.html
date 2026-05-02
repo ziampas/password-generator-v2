@@ -5,44 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PassBear | Secure & Memorable Password Generator</title>
 
-    <!-- SEO & Favicons -->
+    <!-- Favicons & Technical Meta -->
     <link rel="shortcut icon" type="image/x-icon" href="./assets/favicon-32x32-B0DaedZ2.png" />
     <link rel="canonical" href="https://passbear.net" />
-    <meta name="description" content="Generate secure, memorable, and private passwords with PassBear. Our browser-based tool uses crypto-secure randomness to keep your online accounts safe." />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="PassBear - Memorable Password Generator" />
-    <meta property="og:description" content="Secure, private, and easy-to-remember passwords generated locally in your browser." />
-    <meta property="og:url" content="https://passbear.net" />
-    <meta property="og:type" content="website" />
+    <meta name="description" content="Generate secure, memorable passwords locally in your browser." />
 
     <!-- Bootstrap 5 & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        /* Smooth transition for the email link hover */
+        .transition-link {
+            transition: opacity 0.2s ease-in-out;
+        }
+        /* Prevents horizontal scroll on small devices */
+        body {
+            overflow-x: hidden;
+        }
+    </style>
   <script type="module" crossorigin src="./assets/index-fYiKC-6b.js"></script>
 </head>
 
 <body class="bg-dark d-flex flex-column min-vh-100">
 
+    <!-- Main Content Area: Grows to push footer down -->
     <main class="flex-grow-1 d-flex align-items-center py-5">
         <div class="container">
-
-            <!-- Generator Section -->
             <div class="row justify-content-center align-items-center">
-                <!-- Logo -->
-                <div class="col-md-4 d-flex justify-content-center mb-4 mb-md-0">
+                
+                <!-- Left Column: Logo -->
+                <div class="col-md-4 d-flex justify-content-center mb-5 mb-md-0">
                     <a href="https://passbear.net">
                         <img src="./assets/passbear_new-CrsOKCPQ.png" alt="PassBear Logo" class="img-fluid" style="max-width: 100%; max-height: 400px; object-fit: contain" />
                     </a>
                 </div>
 
-                <!-- Generator Card -->
+                <!-- Right Column: Generator Card -->
                 <div class="col-md-4">
                     <div class="p-4 bg-white shadow-sm rounded-4">
                         <form id="password-form">
                             <!-- Result Display -->
                             <div class="mb-3 mt-2">
-                                <input type="text" id="generated-password" class="form-control form-control-lg text-center" placeholder="Your password" aria-label="Generated Password" />
+                                <input type="text" id="generated-password" class="form-control form-control-lg text-center fw-bold" placeholder="Your password" aria-label="Generated Password" />
                             </div>
 
                             <!-- Length Sliders -->
@@ -63,7 +68,7 @@
                                 </div>
                             </div>
 
-                            <!-- Options -->
+                            <!-- Password Options -->
                             <div class="row g-2 mb-2">
                                 <div class="col-6 text-nowrap">
                                     <div class="form-check">
@@ -91,25 +96,32 @@
                                 </div>
                             </div>
 
-                            <!-- Additional Settings -->
+                            <!-- Persistence Setting -->
                             <div class="form-check mt-3 pt-2 border-top">
                                 <input class="form-check-input" type="checkbox" id="save-settings-option" />
                                 <label class="form-check-label small" for="save-settings-option">Save settings</label>
                             </div>
 
+                            <!-- Dynamic Character Count -->
                             <p class="mt-2 mb-3 small text-muted">
-                                Length: <span id="generated-password-length" class="fw-bold">0</span>
+                                Length: <span id="generated-password-length" class="fw-bold">0</span> characters
                             </p>
 
-                            <!-- Actions -->
-                            <button type="button" class="btn btn-primary w-100 mb-2 py-2 fw-bold" id="generate-password">Generate Password</button>
-                            <button type="button" class="btn btn-success w-100 py-2 fw-bold" id="copy-to-clipboard">Copy to Clipboard</button>
+                            <!-- Primary Action Buttons -->
+                            <button type="button" class="btn btn-primary w-100 mb-2 py-2 fw-bold" id="generate-password">
+                                <i class="bi bi-arrow-clockwise me-1"></i> Generate Password
+                            </button>
+                            <button type="button" class="btn btn-success w-100 py-2 fw-bold" id="copy-to-clipboard">
+                                <i class="bi bi-clipboard me-1"></i> Copy to Clipboard
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+    </main>
 
-    <!-- Footer -->
+    <!-- Footer: Stayed at bottom via d-flex flex-column and mt-auto -->
     <footer class="text-white-50 py-4 mt-auto">
         <div class="container border-top border-secondary pt-3" style="--bs-border-opacity: .2;">
             <div class="d-md-flex justify-content-between align-items-center small">
@@ -125,7 +137,9 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Main Logic -->
 </body>
 </html>
