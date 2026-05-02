@@ -11,6 +11,17 @@
   "description": "",
   "dependencies": {
     "bootstrap": "^5.3.5",
-    "bootstrap-icons": "^1.11.3"
-  }
+    "bootstrap-icons": "^1.11.3",
+    "random-word-slugs": "^0.1.7"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ziampas/password-generator-v2.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ziampas/password-generator-v2/issues"
+  },
+  "homepage": "https://github.com/ziampas/password-generator-v2#readme"
 }

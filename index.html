@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PassBear - Simple password generator</title>
+    
+    <!-- SEO & Favicons -->
     <link rel="shortcut icon" type="image/x-icon" href="favicon-32x32.png" />
-    <meta
-      name="description"
-      content="PassBear.net - Making password generation easy and secure for better online protection."
-    />
+    <meta name="description" content="PassBear.net - Making password generation easy and secure for better online protection." />
+    
+    <!-- External CSS (Bootstrap & Icons) -->
     <link rel="stylesheet" href="css/main.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-      rel="stylesheet"
-    />
-    <script src="js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body class="bg-pink-300 d-flex flex-column min-vh-100">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <style>
+        /* Custom Pink Theme for Slider Thumbs */
+        .form-range::-webkit-slider-thumb { background: #f687b3; }
+        .form-range::-moz-range-thumb { background: #f687b3; }
+    </style>
+</head>
+
+<body class="bg-pink-300 d-flex flex-column min-vh-100">
+    
+    <!-- Dark Mode Toggle -->
     <header class="position-fixed top-0 end-0 p-3 z-index-10">
-      <!-- Dark mode toggle icon (moon icon) -->
-      <i
-        id="darkModeToggle"
-        class="bi bi-moon-fill"
-        aria-label="Toggle Dark Mode"
-      ></i>
+        <i id="darkModeToggle" class="bi bi-moon-fill" style="cursor: pointer; font-size: 1.5rem;" aria-label="Toggle Dark Mode"></i>
     </header>
 
-    <main
-      class="flex-grow-1 container d-flex align-items-center justify-content-center"
-    >
-      <div class="row w-100 justify-content-center">
-        <!-- Left Div: Logo -->
-        <div
-          class="col-md-4 d-flex justify-content-center align-items-center mb-4 mb-md-0"
-        >
-          <a href="https://passbear.net">
-            <img
-              src="img/passbear_new.png"
-              alt="Logo"
-              class="img-fluid"
-              style="max-width: 100%; max-height: 400px; object-fit: contain"
-            />
-          </a>
-        </div>
+    <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
+        <div class="row w-100 justify-content-center">
+            
+            <!-- Logo Section -->
+            <div class="col-md-4 d-flex justify-content-center align-items-center mb-4 mb-md-0">
+                <a href="https://passbear.net">
+                    <img src="img/passbear_new.png" alt="PassBear Logo" class="img-fluid" style="max-width: 100%; max-height: 400px; object-fit: contain" />
+                </a>
+            </div>
 
         <!-- Right Div: Form -->
         <div class="col-md-4 form-card">
@@ -52,6 +45,7 @@
                 type="text"
                 id="generated-password"
                 class="form-control form-control-lg"
+                readonly
                 placeholder="Your password will appear here"
               />
             </div>
@@ -69,51 +63,47 @@
               >
             </div>
 
-            <div class="form-check mt-2">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="specialchars"
-                id="specialchars-option"
-              />
-              <label class="form-check-label" for="specialchars-option"
-                >Include Special Characters</label
-              >
-            </div>
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" id="specialchars-option" checked />
+                        <label class="form-check-label" for="specialchars-option">Include Special Characters</label>
+                    </div>
 
-            <!-- Display Password Length -->
-            <p class="mt-4">
-              Password length: <span id="generated-password-length"></span>
-            </p>
+                    <!-- Persistence Option -->
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" id="save-settings-option" />
+                        <label class="form-check-label" for="save-settings-option">Save settings</label>
+                    </div>
 
-            <button
-              type="button"
-              class="btn btn-primary w-100 mb-2"
-              id="generate-password"
-            >
-              Generate Password
-            </button>
-            <button
-              type="button"
-              class="btn btn-success w-100"
-              id="copy-to-clipboard"
-            >
-              Copy to Clipboard
-            </button>
-          </form>
+                    <!-- Live Metadata -->
+                    <p class="mt-4 mb-3 small text-muted">
+                        Actual password length: <span id="generated-password-length" class="fw-bold">0</span>
+                    </p>
+
+                    <!-- Action Buttons -->
+                    <button type="button" class="btn btn-primary w-100 mb-2 py-2 fw-bold" id="generate-password">
+                        Generate Password
+                    </button>
+                    
+                    <button type="button" class="btn btn-success w-100 py-2 fw-bold" id="copy-to-clipboard">
+                        Copy to Clipboard
+                    </button>
+                    
+                </form>
+            </div> <!-- End form-card -->
         </div>
-      </div>
     </main>
 
+    <!-- Simple Footer -->
     <footer class="bg-dark text-white py-3 mt-auto">
-      <div class="container d-flex justify-content-center align-items-center">
-        <small class="d-flex align-items-center text-center flex-wrap">
-          &copy; 2025 PassBear
-        </small>
-      </div>
+        <div class="container d-flex justify-content-center align-items-center">
+            <small class="text-center">
+                &copy; 2026 PassBear - Secure, Simple, Sweet.
+            </small>
+        </div>
     </footer>
 
-    <!-- Link to script.js -->
-    <script type="module" src="js/script.js"></script>
-  </body>
+    <!-- Logic (Vite/Module System) -->
+    <script type="module" src="/js/script.js"></script>
+    
+</body>
 </html>
