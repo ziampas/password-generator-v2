@@ -1,14 +1,16 @@
 /**
- * PassBear Password Generator - Full Waterproof Logic
+ * PassBear Password Generator - Final Optimized Logic
  */
 
 import { generateSlug } from 'random-word-slugs';
 
 // --- 1. CONSTANTS ---
 const SPECIALS = '!@#%)_';
+
+// Optimized for memorable, easy-to-type visual words
 const CATEGORIES = {
-    adjective: ['color', 'appearance', 'shapes', 'condition'],
-    noun: ['animals', 'instruments', 'food', 'sports', 'transportation']
+    adjective: ['color', 'size', 'condition', 'appearance'],
+    noun: ['animals', 'food', 'thing', 'place']
 };
 
 // --- 2. SECURE RANDOM HELPERS ---
@@ -45,6 +47,7 @@ const generatePassword = () => {
         return num + spec;
     };
 
+    // Main attempt loop: Tries 100 times to fit 2 words + suffix into your length limits
     for (let attempts = 0; attempts < 100; attempts++) {
         const suffix = getSuffix();
         let slugParts = generateSlug(2, { format: formatType, categories: CATEGORIES });
@@ -59,6 +62,7 @@ const generatePassword = () => {
         }
     }
 
+    // Waterproof Fallback: If 100 tries failed, force 2 words and trim only if strictly necessary
     if (!password) {
         const suffix = getSuffix();
         let fallbackSlug = generateSlug(2, { format: formatType, categories: CATEGORIES });
@@ -84,6 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxSlider = document.getElementById('password-max-length');
     const maxLabel = document.getElementById('password-max-length-value');
     const saveCheck = document.getElementById('save-settings-option');
+
+    let copyTimer; // Prevents the copy button from getting stuck
 
     const controls = [
         minSlider, maxSlider, saveCheck,
@@ -122,13 +128,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- NEW: Manual Edit Listener ---
-    // This updates the length counter as the user types
+    // Manual Edit Listener
     passwordInput.addEventListener('input', () => {
         actualLengthDisplay.textContent = passwordInput.value.length;
     });
 
-    // Events
+    // Control Listeners
     controls.forEach(el => el.addEventListener('change', handlePersistence));
 
     minSlider.addEventListener('input', (e) => {
@@ -155,14 +160,22 @@ document.addEventListener('DOMContentLoaded', () => {
         actualLengthDisplay.textContent = passwordLength;
     });
 
+    // Robust Copy Listener (3 second clear)
     copyBtn.addEventListener('click', () => {
-        if (passwordInput.value) {
-            navigator.clipboard.writeText(passwordInput.value).then(() => {
-                const originalText = copyBtn.innerHTML;
-                copyBtn.textContent = 'Copied!';
-                setTimeout(() => copyBtn.innerHTML = originalText, 2000);
-            });
-        }
+        if (!passwordInput.value) return;
+
+        // Clear existing timer to prevent flickering or sticking
+        clearTimeout(copyTimer);
+        const originalContent = 'Copy to Clipboard';
+
+        navigator.clipboard.writeText(passwordInput.value).then(() => {
+            copyBtn.textContent = 'Copied!';
+            
+            // Revert back after 3 seconds
+            copyTimer = setTimeout(() => {
+                copyBtn.textContent = originalContent;
+            }, 2000);
+        });
     });
 
     loadSavedData();
