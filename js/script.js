@@ -1,10 +1,5 @@
 /**
  * PassBear Password Generator Logic
- * 
- * Features:
- * - Cryptographically secure random number generation.
- * - Dash separation & Capitalization support.
- * - LocalStorage persistence for user settings.
  */
 
 import { generateSlug } from 'random-word-slugs';
@@ -46,24 +41,16 @@ const generatePassword = () => {
 
     let password = "";
     let attempts = 0;
-
-    // Här väljer vi format. Om inte capitalize, tvinga lowercase.
     const formatType = capitalize ? 'title' : 'lowercase';
 
     while (attempts < 50) {
         attempts++;
-        
         const randomNumber = includeNumbers ? String(10 + cryptoRandomInt(90)) : '';
         const randomSpecialChar = includeSpecialChars ? getRandomElementSecure(specials) : '';
         const suffix = randomNumber + randomSpecialChar;
 
-        // Generera ord
-        let slugParts = generateSlug(2, { 
-            format: formatType, 
-            categories: allowedCategories 
-        });
+        let slugParts = generateSlug(2, { format: formatType, categories: allowedCategories });
         
-        // EXTRA FIX: Om biblioteket sviker, tvinga små bokstäver manuellt här
         if (!capitalize) {
             slugParts = slugParts.toLowerCase();
         }
@@ -84,7 +71,6 @@ const generatePassword = () => {
         }
     }
 
-    // Safety Fallback
     if (!password) {
         let fallbackSlug = generateSlug(1, { format: formatType });
         if (!capitalize) fallbackSlug = fallbackSlug.toLowerCase();
@@ -95,38 +81,12 @@ const generatePassword = () => {
     return { password, passwordLength: password.length };
 };
 
-// --- Uppdaterad Load Logic för att säkerställa Capitalize är TRUE som default ---
-const loadSavedData = () => {
-    const isSaveEnabled = localStorage.getItem('pb_save_enabled') === 'true';
-    
-    if (isSaveEnabled) {
-        saveCheck.checked = true;
-        if (localStorage.getItem('pb_min')) minSlider.value = localStorage.getItem('pb_min');
-        if (localStorage.getItem('pb_max')) maxSlider.value = localStorage.getItem('pb_max');
-        if (localStorage.getItem('pb_num')) numCheck.checked = localStorage.getItem('pb_num') === 'true';
-        if (localStorage.getItem('pb_spec')) specCheck.checked = localStorage.getItem('pb_spec') === 'true';
-        if (localStorage.getItem('pb_cap')) capCheck.checked = localStorage.getItem('pb_cap') === 'true';
-        if (localStorage.getItem('pb_dash')) dashCheck.checked = localStorage.getItem('pb_dash') === 'true';
-    } else {
-        // Fabriksinställningar
-        minSlider.value = 12;
-        maxSlider.value = 20;
-        numCheck.checked = true;
-        specCheck.checked = true; 
-        capCheck.checked = true; // Sätt till TRUE här
-        dashCheck.checked = false;
-        saveCheck.checked = false;
-    }
-    
-    minLabel.textContent = minSlider.value;
-    maxLabel.textContent = maxSlider.value;
-};
-
 /**
- * 3. UI, EVENT LISTENERS & PERSISTENCE
+ * 3. UI & EVENT LISTENERS
  */
 document.addEventListener('DOMContentLoaded', () => {
     
+    // --- DOM SELECTORS ---
     const generateBtn = document.getElementById('generate-password');
     const passwordInput = document.getElementById('generated-password');
     const actualLengthDisplay = document.getElementById('generated-password-length');
@@ -143,6 +103,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const dashCheck = document.getElementById('dash-option');
     const saveCheck = document.getElementById('save-settings-option');
 
+    // --- NYTT: Live-uppdatering av längd när man skriver själv ---
+    passwordInput.addEventListener('input', () => {
+        actualLengthDisplay.textContent = passwordInput.value.length;
+    });
+
+    // --- PERSISTENCE LOGIC ---
     const loadSavedData = () => {
         const isSaveEnabled = localStorage.getItem('pb_save_enabled') === 'true';
         
@@ -155,7 +121,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('pb_cap')) capCheck.checked = localStorage.getItem('pb_cap') === 'true';
             if (localStorage.getItem('pb_dash')) dashCheck.checked = localStorage.getItem('pb_dash') === 'true';
         } else {
-            // Default Factory State
             minSlider.value = 12;
             maxSlider.value = 20;
             numCheck.checked = true;
@@ -164,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dashCheck.checked = false;
             saveCheck.checked = false;
         }
-        
         minLabel.textContent = minSlider.value;
         maxLabel.textContent = maxSlider.value;
     };
@@ -183,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Event Listeners
+    // --- EVENT LISTENERS ---
     [minSlider, maxSlider, numCheck, specCheck, capCheck, dashCheck, saveCheck].forEach(el => {
         el.addEventListener('change', handlePersistence);
     });
