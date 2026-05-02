@@ -1,12 +1,17 @@
 /**
- * PassBear Password Generator Logic
+ * PassBear Password Generator - Full Waterproof Logic
  */
 
 import { generateSlug } from 'random-word-slugs';
 
-/**
- * 1. SECURE RANDOM HELPERS
- */
+// --- 1. CONSTANTS ---
+const SPECIALS = '!@#%)_';
+const CATEGORIES = {
+    adjective: ['color', 'appearance', 'shapes', 'condition'],
+    noun: ['animals', 'instruments', 'food', 'sports', 'transportation']
+};
+
+// --- 2. SECURE RANDOM HELPERS ---
 function cryptoRandomInt(maxExclusive) {
     const a = new Uint32Array(1);
     const limit = Math.floor(0x100000000 / maxExclusive) * maxExclusive;
@@ -22,48 +27,32 @@ function getRandomElementSecure(items) {
     return items[cryptoRandomInt(items.length)];
 }
 
-/**
- * 2. CORE GENERATION LOGIC
- */
+// --- 3. CORE GENERATION LOGIC ---
 const generatePassword = () => {
-    const minLength = parseInt(document.getElementById('password-length').value);
-    const maxLength = parseInt(document.getElementById('password-max-length').value);
+    const minLength = parseInt(document.getElementById('password-length').value, 10);
+    const maxLength = parseInt(document.getElementById('password-max-length').value, 10);
     const includeNumbers = document.getElementById('numbers-option').checked;
     const includeSpecialChars = document.getElementById('specialchars-option').checked;
     const capitalize = document.getElementById('capitalize-option').checked;
     const useDashes = document.getElementById('dash-option').checked;
 
-    const specials = '!@#%&';
-    const allowedCategories = {
-        adjective: ['color', 'appearance', 'shapes'],
-        noun: ['animals', 'instruments', 'food', 'sports', 'transportation']
-    };
-
     let password = "";
-    let attempts = 0;
     const formatType = capitalize ? 'title' : 'lowercase';
 
-    while (attempts < 50) {
-        attempts++;
-        const randomNumber = includeNumbers ? String(10 + cryptoRandomInt(90)) : '';
-        const randomSpecialChar = includeSpecialChars ? getRandomElementSecure(specials) : '';
-        const suffix = randomNumber + randomSpecialChar;
+    const getSuffix = () => {
+        const num = includeNumbers ? String(10 + cryptoRandomInt(90)) : '';
+        const spec = includeSpecialChars ? getRandomElementSecure(SPECIALS) : '';
+        return num + spec;
+    };
 
-        let slugParts = generateSlug(2, { format: formatType, categories: allowedCategories });
-        
-        if (!capitalize) {
-            slugParts = slugParts.toLowerCase();
-        }
+    // Main attempt loop (tries for 2 words)
+    for (let attempts = 0; attempts < 100; attempts++) {
+        const suffix = getSuffix();
+        let slugParts = generateSlug(2, { format: formatType, categories: CATEGORIES });
+        if (!capitalize) slugParts = slugParts.toLowerCase();
 
-        let slug = useDashes ? slugParts.replace(/ /g, '-') : slugParts.replace(/ /g, '');
-        let candidate = slug + suffix;
-
-        if (candidate.length > maxLength) {
-            slugParts = generateSlug(1, { format: formatType, categories: allowedCategories });
-            if (!capitalize) slugParts = slugParts.toLowerCase();
-            slug = slugParts;
-            candidate = slug + suffix;
-        }
+        const slug = useDashes ? slugParts.replace(/ /g, '-') : slugParts.replace(/ /g, '');
+        const candidate = slug + suffix;
 
         if (candidate.length >= minLength && candidate.length <= maxLength) {
             password = candidate;
@@ -71,63 +60,51 @@ const generatePassword = () => {
         }
     }
 
+    // Waterproof Fallback (guarantees 2 words, then trims if absolutely necessary)
     if (!password) {
-        let fallbackSlug = generateSlug(1, { format: formatType });
+        const suffix = getSuffix();
+        let fallbackSlug = generateSlug(2, { format: formatType, categories: CATEGORIES });
         if (!capitalize) fallbackSlug = fallbackSlug.toLowerCase();
-        const suffix = (includeNumbers ? "99" : "") + (includeSpecialChars ? "!" : "");
-        password = (fallbackSlug + suffix).substring(0, maxLength);
+        
+        let slug = useDashes ? fallbackSlug.replace(/ /g, '-') : fallbackSlug.replace(/ /g, '');
+        let candidate = slug + suffix;
+        
+        password = candidate.length > maxLength ? candidate.substring(0, maxLength) : candidate;
     }
 
     return { password, passwordLength: password.length };
 };
 
-/**
- * 3. UI & EVENT LISTENERS
- */
+// --- 4. UI & EVENT LISTENERS ---
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- DOM SELECTORS ---
     const generateBtn = document.getElementById('generate-password');
     const passwordInput = document.getElementById('generated-password');
     const actualLengthDisplay = document.getElementById('generated-password-length');
     const copyBtn = document.getElementById('copy-to-clipboard');
-
     const minSlider = document.getElementById('password-length');
     const minLabel = document.getElementById('password-length-value');
     const maxSlider = document.getElementById('password-max-length');
     const maxLabel = document.getElementById('password-max-length-value');
-    
-    const numCheck = document.getElementById('numbers-option');
-    const specCheck = document.getElementById('specialchars-option');
-    const capCheck = document.getElementById('capitalize-option');
-    const dashCheck = document.getElementById('dash-option');
     const saveCheck = document.getElementById('save-settings-option');
 
-    // --- NYTT: Live-uppdatering av längd när man skriver själv ---
-    passwordInput.addEventListener('input', () => {
-        actualLengthDisplay.textContent = passwordInput.value.length;
-    });
+    const controls = [
+        minSlider, maxSlider, saveCheck,
+        document.getElementById('numbers-option'),
+        document.getElementById('specialchars-option'),
+        document.getElementById('capitalize-option'),
+        document.getElementById('dash-option')
+    ];
 
-    // --- PERSISTENCE LOGIC ---
+    // Persistence Logic
     const loadSavedData = () => {
-        const isSaveEnabled = localStorage.getItem('pb_save_enabled') === 'true';
-        
-        if (isSaveEnabled) {
+        if (localStorage.getItem('pb_save_enabled') === 'true') {
             saveCheck.checked = true;
             if (localStorage.getItem('pb_min')) minSlider.value = localStorage.getItem('pb_min');
             if (localStorage.getItem('pb_max')) maxSlider.value = localStorage.getItem('pb_max');
-            if (localStorage.getItem('pb_num')) numCheck.checked = localStorage.getItem('pb_num') === 'true';
-            if (localStorage.getItem('pb_spec')) specCheck.checked = localStorage.getItem('pb_spec') === 'true';
-            if (localStorage.getItem('pb_cap')) capCheck.checked = localStorage.getItem('pb_cap') === 'true';
-            if (localStorage.getItem('pb_dash')) dashCheck.checked = localStorage.getItem('pb_dash') === 'true';
-        } else {
-            minSlider.value = 12;
-            maxSlider.value = 20;
-            numCheck.checked = true;
-            specCheck.checked = true; 
-            capCheck.checked = true;
-            dashCheck.checked = false;
-            saveCheck.checked = false;
+            document.getElementById('numbers-option').checked = localStorage.getItem('pb_num') === 'true';
+            document.getElementById('specialchars-option').checked = localStorage.getItem('pb_spec') === 'true';
+            document.getElementById('capitalize-option').checked = localStorage.getItem('pb_cap') === 'true';
+            document.getElementById('dash-option').checked = localStorage.getItem('pb_dash') === 'true';
         }
         minLabel.textContent = minSlider.value;
         maxLabel.textContent = maxSlider.value;
@@ -138,37 +115,33 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('pb_save_enabled', 'true');
             localStorage.setItem('pb_min', minSlider.value);
             localStorage.setItem('pb_max', maxSlider.value);
-            localStorage.setItem('pb_num', numCheck.checked);
-            localStorage.setItem('pb_spec', specCheck.checked);
-            localStorage.setItem('pb_cap', capCheck.checked);
-            localStorage.setItem('pb_dash', dashCheck.checked);
+            localStorage.setItem('pb_num', document.getElementById('numbers-option').checked);
+            localStorage.setItem('pb_spec', document.getElementById('specialchars-option').checked);
+            localStorage.setItem('pb_cap', document.getElementById('capitalize-option').checked);
+            localStorage.setItem('pb_dash', document.getElementById('dash-option').checked);
         } else {
             localStorage.clear();
         }
     };
 
-    // --- EVENT LISTENERS ---
-    [minSlider, maxSlider, numCheck, specCheck, capCheck, dashCheck, saveCheck].forEach(el => {
-        el.addEventListener('change', handlePersistence);
-    });
+    // Events
+    controls.forEach(el => el.addEventListener('change', handlePersistence));
 
     minSlider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-        if (val > parseInt(maxSlider.value)) {
-            maxSlider.value = val;
-            maxLabel.textContent = val;
+        if (parseInt(e.target.value) > parseInt(maxSlider.value)) {
+            maxSlider.value = e.target.value;
+            maxLabel.textContent = e.target.value;
         }
-        minLabel.textContent = val;
+        minLabel.textContent = e.target.value;
         handlePersistence();
     });
 
     maxSlider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-        if (val < parseInt(minSlider.value)) {
-            minSlider.value = val;
-            minLabel.textContent = val;
+        if (parseInt(e.target.value) < parseInt(minSlider.value)) {
+            minSlider.value = e.target.value;
+            minLabel.textContent = e.target.value;
         }
-        maxLabel.textContent = val;
+        maxLabel.textContent = e.target.value;
         handlePersistence();
     });
 
@@ -189,5 +162,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadSavedData();
-    generateBtn.click();
+    generateBtn.click(); // Initial generate
 });
