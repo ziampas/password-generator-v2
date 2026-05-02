@@ -9,23 +9,15 @@
     <link rel="shortcut icon" type="image/x-icon" href="favicon-32x32.png" />
     <meta name="description" content="PassBear.net - Making password generation easy and secure for better online protection." />
     
-    <!-- External CSS (Bootstrap & Icons) -->
-    <link rel="stylesheet" href="css/main.css" />
+    <!-- Bootstrap 5 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-
-    <style>
-        /* Custom Pink Theme for Slider Thumbs */
-        .form-range::-webkit-slider-thumb { background: #f687b3; }
-        .form-range::-moz-range-thumb { background: #f687b3; }
-    </style>
 </head>
 
-<body class="bg-pink-300 d-flex flex-column min-vh-100">
+<body class="bg-dark d-flex flex-column min-vh-100">
     
-    <!-- Dark Mode Toggle -->
-    <header class="position-fixed top-0 end-0 p-3 z-index-10">
-        <i id="darkModeToggle" class="bi bi-moon-fill" style="cursor: pointer; font-size: 1.5rem;" aria-label="Toggle Dark Mode"></i>
-    </header>
+    <!-- Header med månen är nu borttagen härifrån 🗑️ -->
 
     <main class="flex-grow-1 container d-flex align-items-center justify-content-center">
         <div class="row w-100 justify-content-center">
@@ -38,7 +30,7 @@
             </div>
 
             <!-- Generator Card -->
-            <div class="col-md-4 form-card">
+            <div class="col-md-4 p-4 bg-white shadow-sm rounded-4">
                 <form id="password-form">
                     
                     <!-- Result Display -->
@@ -49,7 +41,6 @@
                     <!-- Range Controls (Min/Max) -->
                     <div class="mb-3">
                         <div class="row g-3">
-                            <!-- Minimum Length Slider -->
                             <div class="col-6">
                                 <label for="password-length" class="form-label d-flex justify-content-between small mb-1">
                                     Min: <span id="password-length-value" class="fw-bold">12</span>
@@ -57,7 +48,6 @@
                                 <input type="range" class="form-range" min="12" max="20" step="1" id="password-length" value="12">
                             </div>
                             
-                            <!-- Maximum Length Slider -->
                             <div class="col-6">
                                 <label for="password-max-length" class="form-label d-flex justify-content-between small mb-1">
                                     Max: <span id="password-max-length-value" class="fw-bold">20</span>
@@ -78,18 +68,15 @@
                         <label class="form-check-label" for="specialchars-option">Include Special Characters</label>
                     </div>
 
-                    <!-- Persistence Option -->
                     <div class="form-check mt-2">
                         <input class="form-check-input" type="checkbox" id="save-settings-option" />
                         <label class="form-check-label" for="save-settings-option">Save settings</label>
                     </div>
 
-                    <!-- Live Metadata -->
                     <p class="mt-4 mb-3 small text-muted">
-                        Actual password length: <span id="generated-password-length" class="fw-bold">0</span>
+                        Password length: <span id="generated-password-length" class="fw-bold">0</span>
                     </p>
 
-                    <!-- Action Buttons -->
                     <button type="button" class="btn btn-primary w-100 mb-2 py-2 fw-bold" id="generate-password">
                         Generate Password
                     </button>
@@ -99,20 +86,20 @@
                     </button>
                     
                 </form>
-            </div> <!-- End form-card -->
+            </div>
         </div>
     </main>
 
-    <!-- Simple Footer -->
-    <footer class="bg-dark text-white py-3 mt-auto">
+    <footer class="text-white py-3 mt-auto">
         <div class="container d-flex justify-content-center align-items-center">
             <small class="text-center">
-                &copy; 2026 PassBear - Secure, Simple, Sweet.
+                &copy; 2026 PassBear | Simple & Secure
             </small>
         </div>
     </footer>
 
-    <!-- Logic (Vite/Module System) -->
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="/js/script.js"></script>
     
 </body>
