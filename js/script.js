@@ -14,7 +14,7 @@ const CATEGORIES = {
     ],
     noun: [
         'animals', 'food', 'transportation',
-        'thing', 'science', 'instruments'
+        'thing', 'instruments'
     ]
 };
 
