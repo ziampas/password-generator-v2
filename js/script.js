@@ -1,5 +1,5 @@
 /**
- * PassBear Password Generator - Final Optimized Logic
+ * PassBear Password Generator - Restored & Enhanced Logic
  */
 
 import { generateSlug } from 'random-word-slugs';
@@ -7,10 +7,15 @@ import { generateSlug } from 'random-word-slugs';
 // --- 1. CONSTANTS ---
 const SPECIALS = '!@#%)_';
 
-// Optimized for memorable, easy-to-type visual words
 const CATEGORIES = {
-    adjective: ['color', 'size', 'condition', 'appearance', 'shapes'],
-    noun: ['animals', 'food', 'transportation', 'media']
+    adjective: [
+        'color', 'size', 'condition', 'appearance', 'shapes',
+        'personality', 'quantity', 'time'
+    ],
+    noun: [
+        'animals', 'food', 'transportation',
+        'thing', 'science', 'instruments'
+    ]
 };
 
 // --- 2. SECURE RANDOM HELPERS ---
@@ -47,10 +52,14 @@ const generatePassword = () => {
         return num + spec;
     };
 
-    // Main attempt loop: Tries 100 times to fit 2 words + suffix into your length limits
+    // Attempt up to 100 times to meet length constraints
     for (let attempts = 0; attempts < 100; attempts++) {
         const suffix = getSuffix();
-        let slugParts = generateSlug(2, { format: formatType, categories: CATEGORIES });
+        let slugParts = generateSlug(2, {
+            format: formatType,
+            categories: CATEGORIES
+        });
+
         if (!capitalize) slugParts = slugParts.toLowerCase();
 
         const slug = useDashes ? slugParts.replace(/ /g, '-') : slugParts.replace(/ /g, '');
@@ -58,19 +67,19 @@ const generatePassword = () => {
 
         if (candidate.length >= minLength && candidate.length <= maxLength) {
             password = candidate;
-            break; 
+            break;
         }
     }
 
-    // Waterproof Fallback: If 100 tries failed, force 2 words and trim only if strictly necessary
+    // Fallback: If constraints aren't met, generate anyway and trim if needed
     if (!password) {
         const suffix = getSuffix();
         let fallbackSlug = generateSlug(2, { format: formatType, categories: CATEGORIES });
         if (!capitalize) fallbackSlug = fallbackSlug.toLowerCase();
-        
+
         let slug = useDashes ? fallbackSlug.replace(/ /g, '-') : fallbackSlug.replace(/ /g, '');
         let candidate = slug + suffix;
-        
+
         password = candidate.length > maxLength ? candidate.substring(0, maxLength) : candidate;
     }
 
@@ -89,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxLabel = document.getElementById('password-max-length-value');
     const saveCheck = document.getElementById('save-settings-option');
 
-    let copyTimer; // Prevents the copy button from getting stuck
+    let copyTimer;
 
     const controls = [
         minSlider, maxSlider, saveCheck,
@@ -99,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('dash-option')
     ];
 
-    // Persistence Logic
     const loadSavedData = () => {
         if (localStorage.getItem('pb_save_enabled') === 'true') {
             saveCheck.checked = true;
@@ -128,14 +136,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Manual Edit Listener
+    // Update character count on manual input
     passwordInput.addEventListener('input', () => {
         actualLengthDisplay.textContent = passwordInput.value.length;
     });
 
-    // Control Listeners
     controls.forEach(el => el.addEventListener('change', handlePersistence));
 
+    // Sync Sliders
     minSlider.addEventListener('input', (e) => {
         if (parseInt(e.target.value) > parseInt(maxSlider.value)) {
             maxSlider.value = e.target.value;
@@ -154,24 +162,21 @@ document.addEventListener('DOMContentLoaded', () => {
         handlePersistence();
     });
 
+    // Generate Action
     generateBtn.addEventListener('click', () => {
         const { password, passwordLength } = generatePassword();
         passwordInput.value = password;
         actualLengthDisplay.textContent = passwordLength;
     });
 
-    // Robust Copy Listener (3 second clear)
+    // Copy Action
     copyBtn.addEventListener('click', () => {
         if (!passwordInput.value) return;
-
-        // Clear existing timer to prevent flickering or sticking
         clearTimeout(copyTimer);
         const originalContent = 'Copy to Clipboard';
-
+        
         navigator.clipboard.writeText(passwordInput.value).then(() => {
             copyBtn.textContent = 'Copied!';
-            
-            // Revert back after 3 seconds
             copyTimer = setTimeout(() => {
                 copyBtn.textContent = originalContent;
             }, 2000);
@@ -179,5 +184,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     loadSavedData();
-    generateBtn.click(); 
+    generateBtn.click();
 });
