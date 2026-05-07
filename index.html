@@ -15,14 +15,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
 
     <style>
-        /* UI Enhancements */
         .transition-link {
             transition: opacity 0.2s ease-in-out;
         }
-        
+
         body {
             overflow-x: hidden;
-            background-color: #212529; /* Explicit bg-dark for flash prevention */
+            background-color: #212529;
         }
 
         .generator-card {
@@ -35,12 +34,11 @@
 
 <body class="bg-dark d-flex flex-column min-vh-100">
 
-    <!-- Main Content -->
     <main class="flex-grow-1 d-flex align-items-center py-5">
         <div class="container">
             <div class="row justify-content-center align-items-center">
-                
-                <!-- Brand/Logo Section -->
+
+                <!-- Brand Section -->
                 <div class="col-md-4 d-flex justify-content-center mb-5 mb-md-0">
                     <a href="https://passbear.net">
                         <img src="./assets/passbear_new-CrsOKCPQ.png" alt="PassBear Logo" class="img-fluid" style="max-height: 400px; object-fit: contain" />
@@ -49,14 +47,12 @@
 
                 <!-- Generator Interface -->
                 <div class="col-md-4">
-                    <div class="p-4 bg-white shadow-sm rounded-4 generator-card">
+                    <div class="p-5 bg-white shadow-sm rounded-4 generator-card">
                         <form id="password-form">
-                            <!-- Password Output -->
                             <div class="mb-3 mt-2">
-                                <input type="text" id="generated-password" class="form-control form-control-lg text-center fw-bold bg-light" placeholder="Your password" aria-label="Generated Password" />
+                                <input type="text" id="generated-password" class="form-control form-control-lg text-center fw-bold bg-light" placeholder="Your password" aria-label="Generated Password" readonly />
                             </div>
 
-                            <!-- Configuration: Length -->
                             <div class="mb-3">
                                 <div class="row g-3">
                                     <div class="col-6">
@@ -74,7 +70,6 @@
                                 </div>
                             </div>
 
-                            <!-- Configuration: Toggles -->
                             <div class="row g-2 mb-2">
                                 <div class="col-6">
                                     <div class="form-check">
@@ -102,24 +97,23 @@
                                 </div>
                             </div>
 
-                            <!-- Settings Persistence -->
-                            <div class="form-check mt-3 pt-2 border-top">
-                                <input class="form-check-input" type="checkbox" id="save-settings-option" />
-                                <label class="form-check-label small text-muted" for="save-settings-option">Save settings locally</label>
-                            </div>
-
-                            <!-- Stats & Info -->
                             <p class="mt-2 mb-3 small text-muted text-center">
                                 Length: <span id="generated-password-length" class="fw-bold text-dark">0</span> characters
                             </p>
 
-                            <!-- Actions -->
-                            <button type="button" class="btn btn-primary w-100 mb-2 py-2 fw-bold" id="generate-password">
-                                <i class="bi bi-arrow-clockwise me-1"></i> Generate
-                            </button>
-                            <button type="button" class="btn btn-success w-100 py-2 fw-bold" id="copy-to-clipboard">
-                                <i class="bi bi-clipboard me-1"></i> Copy to Clipboard
-                            </button>
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-primary rounded-pill py-2 fw-bold border-0 shadow-sm" id="generate-password">
+                                    <i class="bi bi-arrow-clockwise me-1"></i> Generate
+                                </button>
+                                <button type="button" class="btn btn-success rounded-pill py-2 fw-bold border-0 shadow-sm" id="copy-to-clipboard">
+                                    <i class="bi bi-clipboard me-1"></i> Copy
+                                </button>
+                            </div>
+
+                            <div class="form-check mt-3 pt-2 border-top border-light">
+                                <input class="form-check-input" type="checkbox" id="save-settings-option" />
+                                <label class="form-check-label small text-muted" for="save-settings-option" style="font-size: 0.75rem;">Remember my settings</label>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -128,18 +122,21 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="text-white-50 py-4 mt-auto">
         <div class="container border-top border-secondary pt-3" style="--bs-border-opacity: .2;">
-            <div class="d-md-flex justify-content-between align-items-center small">
+            <div class="d-md-flex justify-content-between align-items-center small text-center text-md-start">
                 <div class="mb-2 mb-md-0 opacity-50">
                     &copy; 2026 PassBear | Simple & Secure Password Generator
+                </div>
+                <div>
+                    <a href="mailto:hello@passbear.net" class="text-white-50 text-decoration-none transition-link">
+                        <i class="bi bi-envelope-at me-1"></i> hello@passbear.net
+                    </a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
